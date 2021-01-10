@@ -2,9 +2,10 @@ from envs import REGISTRY as env_REGISTRY
 from functools import partial
 from components.episode_buffer import EpisodeBatch
 import numpy as np
+import torch as th
 
 
-class EpisodeRunner:
+class EpisodeCrossRunner:
 
     def __init__(self, args, logger):
         self.args = args
@@ -26,16 +27,17 @@ class EpisodeRunner:
         # Log the first run
         self.log_train_stats_t = -1000000
 
-    def setup(self, scheme, groups, preprocess, mac):
+    def setup(self, scheme, groups, preprocess, mac1, mac2):
         self.new_batch = partial(EpisodeBatch, scheme, groups, self.batch_size, self.episode_limit + 1,
                                  preprocess=preprocess, device=self.args.device)
-        self.mac = mac
+        self.mac1 = mac1
+        self.mac2 = mac2
 
     def get_env_info(self):
         return self.env.get_env_info()
 
     def save_replay(self):
-        self.env.save_replay()
+        pass
 
     def close_env(self):
         self.env.close()
@@ -45,12 +47,21 @@ class EpisodeRunner:
         self.env.reset()
         self.t = 0
 
-    def run(self, test_mode=False):
+    def run(self, test_mode=True):
+        #this is a function for cross-play evaluation.
+        #two different macs are loaded and then the two players are
+        #controlled by the different macs
+
+
+        #cross play only for testing!
+        assert test_mode
+
         self.reset()
 
         terminated = np.zeros(self.args.batch_size_run)
         episode_return = 0
-        self.mac.init_hidden(batch_size=self.batch_size)
+        self.mac1.init_hidden(batch_size=self.batch_size)
+        self.mac2.init_hidden(batch_size=self.batch_size)
 
         while not terminated.all():
 
@@ -64,7 +75,13 @@ class EpisodeRunner:
 
             # Pass the entire batch of experiences up till now to the agents
             # Receive the actions for each agent at this timestep in a batch of size 1
-            actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
+
+            actions1 = self.mac1.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
+            actions2 = self.mac2.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
+
+            #concatenate actions from both macs and throw away the ones I don't need.
+            actions = th.stack([actions1[:, 0], actions2[:, 1]], dim=1)
+
 
             reward, terminated, env_info = self.env.step(actions)
             episode_return += reward
@@ -87,7 +104,13 @@ class EpisodeRunner:
         self.batch.update(last_data, ts=self.t)
 
         # Select actions in the last stored state
-        actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
+
+        actions1 = self.mac1.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
+        actions2 = self.mac2.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode)
+
+        # concatenate actions from both macs and throw away the ones I don't need.
+        actions = th.stack([actions1[:, 0], actions2[:, 1]], dim=1)
+
         self.batch.update({"actions": actions}, ts=self.t)
 
         cur_stats = self.test_stats if test_mode else self.train_stats
@@ -97,24 +120,26 @@ class EpisodeRunner:
         cur_stats["n_episodes"] = 1 + cur_stats.get("n_episodes", 0)
         cur_stats["ep_length"] = self.t + cur_stats.get("ep_length", 0)
 
-        if not test_mode:
-            self.t_env += self.t * self.batch_size
+        self.t_env += self.t * self.batch_size
 
         cur_returns.append(episode_return)
 
-        if test_mode and (len(self.test_returns) == max(1, self.args.test_nepisode//self.batch_size)):
+        if len(self.test_returns) == max(1, self.args.test_nepisode//self.batch_size):
             self._log(cur_returns, cur_stats, log_prefix)
-        elif self.t_env - self.log_train_stats_t >= self.args.runner_log_interval:
-            self._log(cur_returns, cur_stats, log_prefix)
-            if hasattr(self.mac.action_selector, "epsilon"):
-                self.logger.log_stat("epsilon", self.mac.action_selector.epsilon, self.t_env)
-            self.log_train_stats_t = self.t_env
 
         return self.batch
 
     def _log(self, returns, stats, prefix):
-        self.logger.log_stat(prefix + "return_mean", np.mean(returns), self.t_env)
-        self.logger.log_stat(prefix + "return_std", np.std(returns), self.t_env)
+
+        self.logger.log_stat(prefix + "return_mean", np.mean(returns, dtype=np.float64), self.t_env)
+
+        #jackknife std leaving out one batch at a time
+        jackknife_means = []
+        idx = np.arange(len(returns))
+        for i in idx:
+            jackknife_means.append(np.array(returns, dtype=np.float64)[idx != i].mean())
+
+        self.logger.log_stat(prefix + "return_jackknife_std", np.std(jackknife_means, dtype=np.float64), self.t_env)
         returns.clear()
 
         for k, v in stats.items():

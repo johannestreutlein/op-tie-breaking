@@ -1,0 +1,22 @@
+env: twostagelevergame
+
+env_args:
+
+  r_success: 1
+  r_failure: -1
+
+  n_comm_steps: 0
+  episode_limit: 3
+  extra_action: 0
+  title: 'twostagelevergame'
+
+#We set this to True since this game does has symmetric players
+obs_agent_id: False # Include the agent's one_hot id in the observation
+
+#I include the agent's action manually in the observation, so this is false
+obs_last_action: False # Include the agent's last action (one_hot) in the observation
+
+#we train for 3 million environment steps (model is saved after 3002880 steps)
+t_max: 3100000 # Stop running after this many timesteps
+
+entropy_alpha: 0.5 #entropy regularization hyperparameter for policy_gradient

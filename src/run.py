@@ -4,6 +4,8 @@ import pprint
 import time
 import threading
 import torch as th
+import numpy as np
+import pandas as pd
 from types import SimpleNamespace as SN
 from utils.logging import Logger
 from utils.timehelper import time_left, time_str
@@ -14,6 +16,7 @@ from runners import REGISTRY as r_REGISTRY
 from controllers import REGISTRY as mac_REGISTRY
 from components.episode_buffer import ReplayBuffer
 from components.transforms import OneHot
+from utils.hash_function import hash_function
 
 
 def run(_run, _config, _log, pymongo_client):
@@ -45,7 +48,10 @@ def run(_run, _config, _log, pymongo_client):
     logger.setup_sacred(_run)
 
     # Run and train
-    run_sequential(args=args, logger=logger)
+    if args.cross_play and args.evaluate:
+        run_sequential_cross(args=args, logger=logger)
+    else:
+        run_sequential(args=args, logger=logger)
 
     # Clean up after finishing
     print("Exiting Main")
@@ -55,26 +61,61 @@ def run(_run, _config, _log, pymongo_client):
         pymongo_client.close()
     print("Mongodb client closed")
 
-    print("Stopping all threads")
-    for t in threading.enumerate():
-        if t.name != "MainThread":
-            print("Thread {} is alive! Is daemon: {}".format(t.name, t.daemon))
-            t.join(timeout=1)
-            print("Thread joined")
 
-    print("Exiting script")
+    #JT: had to comment out the following, otherwise this terminates my filestorage observer before it
+    #saves the results.
+
+    #print("Stopping all threads")
+    #for t in threading.enumerate():
+    #    if t.name != "MainThread":
+    #        print("Thread {} is alive! Is daemon: {}".format(t.name, t.daemon))
+    #        t.join(timeout=1)
+    #        print("Thread joined")
+
+    #print("Exiting script")
 
     # Making sure framework really exits
-    os._exit(os.EX_OK)
+    #os._exit(os.EX_OK)
 
 
-def evaluate_sequential(args, runner):
+def evaluate_sequential(args, runner, logger, self_play=True):
+    batch_list = []
+    episode = 0
 
-    for _ in range(args.test_nepisode):
-        runner.run(test_mode=True)
+    n_test_runs = max(1, args.test_nepisode // runner.batch_size)
+    for _ in range(n_test_runs):
+        if args.save_episodes or args.calculate_hash:
+            batch_list.append(runner.run(test_mode=True))
+        else:
+            runner.run(test_mode=True)
+        episode += args.batch_size_run
 
     if args.save_replay:
         runner.save_replay()
+
+    if args.save_episodes:
+        runner.env.save_episodes(batch_list)
+
+    if args.calculate_hash and self_play:
+        histories = runner.env.prepare_histories(batch_list)
+        logger.console_logger.info('Prepared {} ground-truth action-observation-histories for hashing'.format(histories.shape[0]))
+
+        for seed in args.hash_function_seeds:
+            trajectories_hash = hash_function(histories, seed, args, logger)
+            logger.log_stat("trajectories_hash_{}".format(seed), trajectories_hash, runner.t_env)
+
+    logger.log_stat("episode", episode, runner.t_env)
+    log_str = "Test Stats | t_env: {:>10} | Episode: {:>8}\n".format(*logger.stats["episode"][-1])
+    i = 0
+    for (k, v) in sorted(logger.stats.items()):
+        if k == "episode":
+            continue
+        i += 1
+        window = 1
+        item = "{:.4f}".format(np.mean([x[1] for x in logger.stats[k][-window:]]))
+        log_str += "{:<25}{:>8}".format(k + ":", item)
+        log_str += "\n" if i % 4 == 0 else "\t"
+    logger.console_logger.info(log_str)
 
     runner.close_env()
 
@@ -88,11 +129,12 @@ def run_sequential(args, logger):
     args.n_agents = env_info["n_agents"]
     args.n_actions = env_info["n_actions"]
     args.state_shape = env_info["state_shape"]
+    args.n_obs = env_info['n_obs']
 
     # Default/Base scheme
     scheme = {
         "state": {"vshape": env_info["state_shape"]},
-        "obs": {"vshape": env_info["obs_shape"], "group": "agents"},
+        "obs": {"vshape": env_info["obs_shape"], "group": "agents", "dtype": th.float32},
         "actions": {"vshape": (1,), "group": "agents", "dtype": th.long},
         "avail_actions": {"vshape": (env_info["n_actions"],), "group": "agents", "dtype": th.int},
         "reward": {"vshape": (1,)},
@@ -122,7 +164,6 @@ def run_sequential(args, logger):
         learner.cuda()
 
     if args.checkpoint_path != "":
-
         timesteps = []
         timestep_to_load = 0
 
@@ -151,8 +192,27 @@ def run_sequential(args, logger):
         runner.t_env = timestep_to_load
 
         if args.evaluate or args.save_replay:
-            evaluate_sequential(args, runner)
+            evaluate_sequential(args, runner, logger)
             return
+
+    assert not args.evaluate
+
+    #this saves the path of the saved model to a csv file to reuse later
+    #only if a csv file path is specifies
+    if args.model_paths:
+        assert args.checkpoint_path == ""
+        save_path = os.path.join(args.local_results_path, "models", args.unique_token)
+        if os.path.exists(args.model_paths):
+            models = pd.read_csv(args.model_paths, index_col=0)
+            models = models.append({'model_path': save_path, 'seed': int(args.seed)}, ignore_index=True)
+            with open(args.model_paths, 'a') as f:
+                models.iloc[-1:].to_csv(f, header=False)
+        else:
+            models = pd.DataFrame(columns=['model_path', 'seed'])
+            models = models.append({'model_path': save_path, 'seed': int(args.seed)}, ignore_index=True)
+            with open(args.model_paths, 'a') as f:
+                models.to_csv(f, header=True)
+
 
     # start training
     episode = 0
@@ -199,7 +259,6 @@ def run_sequential(args, logger):
         if args.save_model and (runner.t_env - model_save_time >= args.save_model_interval or model_save_time == 0):
             model_save_time = runner.t_env
             save_path = os.path.join(args.local_results_path, "models", args.unique_token, str(runner.t_env))
-            #"results/models/{}".format(unique_token)
             os.makedirs(save_path, exist_ok=True)
             logger.console_logger.info("Saving models to {}".format(save_path))
 
@@ -232,3 +291,147 @@ def args_sanity_check(config, _log):
         config["test_nepisode"] = (config["test_nepisode"]//config["batch_size_run"]) * config["batch_size_run"]
 
     return config
+
+
+def run_sequential_cross(args, logger):
+    #this is like run_sequential, but for doing cross-play among a list of models
+
+    # Init runner so we can get env info
+    runner = r_REGISTRY['cross'](args=args, logger=logger)
+
+    # Set up schemes and groups here
+    env_info = runner.get_env_info()
+    args.n_agents = env_info["n_agents"]
+    args.n_actions = env_info["n_actions"]
+    args.state_shape = env_info["state_shape"]
+    args.n_obs = env_info['n_obs']
+
+    # Default/Base scheme
+    scheme = {
+        "state": {"vshape": env_info["state_shape"]},
+        "obs": {"vshape": env_info["obs_shape"], "group": "agents", "dtype": th.float32},
+        "actions": {"vshape": (1,), "group": "agents", "dtype": th.long},
+        "avail_actions": {"vshape": (env_info["n_actions"],), "group": "agents", "dtype": th.int},
+        "reward": {"vshape": (1,)},
+        "terminated": {"vshape": (1,), "dtype": th.uint8},
+    }
+    groups = {
+        "agents": args.n_agents
+    }
+    preprocess = {
+        "actions": ("actions_onehot", [OneHot(out_dim=args.n_actions)])
+    }
+
+    assert args.model_paths #need models to load
+
+    args.models = pd.read_csv(args.model_paths, index_col=0)
+
+    logger.sacred_info['model_paths'] = args.models.to_dict(orient='list')
+
+    #this does cross-play evaluation to create a matrix of n times n values
+    #it can create several such matrices, splitting the list of models into
+    #args.models.shape[0]//n different "runs"
+
+    n = args.n_seeds_per_run
+    if n == 0:
+        n = args.models.shape[0]
+    for i in range(args.models.shape[0]//n):
+        logger.console_logger.info("------ Evaluating run {} ------".format(i))
+        for index_1 in range(n):
+            logger.console_logger.info("------ run {}, seed nr {}------".format(i, index_1))
+            for index_2 in range(n):
+                self_play = index_1 == index_2
+
+                #this can still support only doing self-play among the models, for instance, when calculating hash functions
+                if args.only_self_play:
+                    if not self_play:
+                        continue
+
+                checkpoint_path_1 = args.models.iloc[n*i+index_1]['model_path']
+                checkpoint_path_2 = args.models.iloc[n*i+index_2]['model_path']
+
+                #shouldn't change the args during run but this is the easiest
+                #way to give this config to the environment later
+                args.checkpoint_path_1 = checkpoint_path_1
+
+                args.checkpoint_path_2 = checkpoint_path_2
+
+                seed_1 = args.models.iloc[n*i+index_1]['seed']
+                seed_2 = args.models.iloc[n*i+index_2]['seed']
+
+                logger.console_logger.info("Model path 1: {}, Seed 1: {}".format(checkpoint_path_1,seed_1))
+                logger.console_logger.info("Model path 2: {}, Seed 2: {}".format(checkpoint_path_2,seed_2))
+
+                buffer = ReplayBuffer(scheme, groups, args.buffer_size, env_info["episode_limit"] + 1,
+                                      preprocess=preprocess,
+                                      device="cpu" if args.buffer_cpu_only else args.device)
+
+                # Setup multiagent controller here
+                mac1 = mac_REGISTRY[args.mac](buffer.scheme, groups, args)
+                mac2 = mac_REGISTRY[args.mac](buffer.scheme, groups, args)
+
+                # Give runner the scheme
+                runner.setup(scheme=scheme, groups=groups, preprocess=preprocess, mac1=mac1, mac2=mac2)
+
+                # Learner
+                learner1 = le_REGISTRY[args.learner](mac1, buffer.scheme, logger, args)
+                learner2 = le_REGISTRY[args.learner](mac2, buffer.scheme, logger, args)
+
+                if args.use_cuda:
+                    learner1.cuda()
+                    learner2.cuda()
+
+                timesteps_1 = []
+                timesteps_2 = []
+
+                timestep_to_load = 0
+
+                if not os.path.isdir(checkpoint_path_1):
+                    logger.console_logger.info("Checkpoint directiory {} doesn't exist".format(checkpoint_path_1))
+                    return
+
+                if not os.path.isdir(checkpoint_path_2):
+                    logger.console_logger.info("Checkpoint directiory {} doesn't exist".format(checkpoint_path_2))
+                    return
+
+                # Go through all files in args.checkpoint_path
+                for name in os.listdir(checkpoint_path_1):
+                    full_name = os.path.join(checkpoint_path_1, name)
+                    # Check if they are dirs the names of which are numbers
+                    if os.path.isdir(full_name) and name.isdigit():
+                        timesteps_1.append(int(name))
+
+                for name in os.listdir(checkpoint_path_2):
+                    full_name = os.path.join(checkpoint_path_2, name)
+                    # Check if they are dirs the names of which are numbers
+                    if os.path.isdir(full_name) and name.isdigit():
+                        timesteps_2.append(int(name))
+
+                if args.load_step == 0:
+                    # choose the max timesteps
+                    timestep_to_load_1 = max(timesteps_1)
+                    timestep_to_load_2 = max(timesteps_2)
+                else:
+                    #not implemented yet!
+                    raise NotImplementedError
+                    # choose the timestep closest to load_step
+                    timestep_to_load = min(timesteps, key=lambda x: abs(x - args.load_step))
+
+                model_path_1 = os.path.join(checkpoint_path_1, str(timestep_to_load_1))
+                model_path_2 = os.path.join(checkpoint_path_2, str(timestep_to_load_2))
+
+                logger.console_logger.info("Loading model 1 from {}".format(model_path_1))
+                logger.console_logger.info("Loading model 2 from {}".format(model_path_2))
+
+                learner1.load_models(model_path_1)
+                learner2.load_models(model_path_2)
+
+                runner.t_env = timestep_to_load
+
+                #training doesn't make sense in cross-play, only evaluation
+                assert args.evaluate
+
+                evaluate_sequential(args, runner, logger, self_play=self_play)
+
+    runner.close_env
+    logger.console_logger.info("Finished cross-play evaluation")

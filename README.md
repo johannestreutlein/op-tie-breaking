@@ -1,71 +1,182 @@
-```diff
-- This is an BETA release
+# A new Formalism, Method and Open Issues for Zero-Shot Coordination code
+
+
+This directory contains code corresponding to the Bachelor thesis "A new Formalism, Method and Open Issues for Zero-Shot Coordination" by Johannes Treutlein
+
+It is based on a beta-release of the PyMARL framework. For more specific information on Pymarl, see the file `PYMARL.md` and https://github.com/oxwhirl/pymarl
+
+
+## Contributions
+
+Here, we give an overview over the files created and edited by us.
+
+The following files were edited by us:
+
+To implement vanilla policy gradient (modification of the `central-V` algorithm)
+```
+src/config/algs/policy_gradient.yaml
 ```
 
-# Deep MARL framework
-
-PyMARL is framework for deep multi-agent reinforcement learning and includes implementations of the following algorithms:
-- [**QMIX**: QMIX: Monotonic Value Function Factorisation for Deep Multi-Agent Reinforcement Learning](https://arxiv.org/abs/1803.11485)
-- [**COMA**: Counterfactual Multi-Agent Policy Gradients](https://arxiv.org/abs/1705.08926)
-- [**VDN**: Value-Decomposition Networks For Cooperative Multi-Agent Learning](https://arxiv.org/abs/1706.05296) 
-- [**IQL**: Independent Q-Learning](https://arxiv.org/abs/1511.08779)
-
-PyMARL currently uses [SMAC](https://github.com/oxwhirl/smac) as its environment.
-
-## Installation instructions
-
-Build the Dockerfile using 
+Added functionality for evaluation of a list of models in cross play
 ```
-cd docker
-bash build.sh
+src/run.py
+src/runners/episode_cross_runner.py
 ```
 
-Set up StarCraft II and SMAC.
-> bash install_sc2.sh
+The following files were created by us:
 
-This will download SC2 into the 3rdparty folder and copy the maps necessary to run over.
+For computing a hash function
+```
+src/utils/hash_function.py
+```
 
-The requirements.txt file can be used to install the necessary packages into a virtual environment (not recomended).
+The following implements the two levergame environments. It also implements other-play for that environment, and preparation of histories for hashing, and 
+a method for printing histories from an evaluation run.
 
-## Run an experiment 
+```
+src/envs/levergame.py
+src/config/envs/asymmetriclevergame.yaml
+src/config/envs/twostagelevergame.yaml
+```
 
-> python3 src/main.py --config=qmix_smac --env-config=sc2 with env_args.map_name=2s_3z
+This runs other-play with tie-breaking for different hyperparameters, and runs an evaluation on all the runs.
+```
+src/op_with_tie_breaking.py
+```
 
-The config files act as defaults for an algorithm or environment. 
+These are all methods for evaluating and plotting
+```
+src/analysis_of_equiv_classes.py
+src/plot_op_w_tie_breaking.py
+src/plot_cross_play_heatmap.py
+src/plot_training_curve.py
+```
 
-They are all located in `src/config`.
-`--config` refers to the config files in `src/config/algs`
-`--env-config` refers to the config files in `src/config/envs`
+## Running experiments
 
-To run stuff using the Docker container:
-> bash run.sh $GPU python3 src/main.py --config=qmix_smac --env-config=sc2 with env_args.map_name=2s_3z
+Here, we describe how to run the experiments we did for the thesis. 
+The files under "src/config" contain default configuration values. Models can be trained by running, for instance,
 
-All results will be stored in the `Results` folder.
+```
+python3 src/main.py --env-config=twostagelevergame --config=policy_gradient
+```
 
-## Saving and loading learnt models
+This trains a model using policy gradient on the two-stage lever game.
+For asymmetric lever game, the environment is `asymmetriclevergame`.
+The model is saved under the directory `src/results/models`, and logs and data of the experiment is created using the
+`sacred` module, as a new directory with a specific ID in the directory `results/sacred`. Data from training are also
+logged by tensorboard and added to `results/tb_logs`.
 
-### Saving models
+To train several models and keep track of them, we use the shell-script `./train_models.sh`:
 
-You can save the learnt models to disk by setting `save_model = True`, which is set to `False` by default. The frequency of saving models can be adjusted using `save_model_interval` configuration. Models will be saved in the result directory, under the folder called *models*. The directory corresponding each run will contain models saved throughout the experiment, each within a folder corresponding to the number of timesteps passed since starting the learning process.
+```
+for ((seed = 100; seed < 420; seed+=1))
+do
+  python3 src/main.py --env-config=twostagelevergame --config=policy_gradient \
+  with seed=$seed checkpoint_path="" model_paths='results/model_lists/twostagelevergame.csv'
+done
+```
 
-### Loading models
+For instance, this trains models for  `twostagelevergame` for seeds 100 to 419 and add the models to the file
+`results/model_lists/twostagelevergame.csv`.
 
-Learnt models can be loaded using the `checkpoint_path` parameter, after which the learning will proceed from the corresponding timestep. 
+A list with model paths and seeds of models that we did train is in the files
 
-## Watching StarCraftII replays
+```
+results/model_lists/twostagelevergame.csv
+results/model_lists/asymmetriclevergame.csv
+```
 
-`save_replay` option allows saving replays of models which are loaded using `checkpoint_path`. Once the model is successfully loaded, `test_nepisode` number of episodes are run on the test mode and a .SC2Replay file is saved in the Replay directory of StarCraftII. The name of the saved replay file starts with the given `env_args.save_replay_prefix` (map_name if empty), followed by the current timestamp. 
+Given this list of trained models, one can plot learning curves that average over all the models by executing
 
-The saved replays can be watched by double-clicking on them or using the following command:
+```
+python3 src/plot_learning_curve.py --model_paths=results/model_lists/twostagelevergame.csv
+python3 src/plot_learning_curve.py --model_paths=results/model_lists/asymmetriclevergame.csv
+```
 
-> python -m pysc2.bin.play --norender --rgb_minimap_size 0 --replay NAME.SC2Replay
+This saves a pdf file of a plot in the directory `results/learning_curves/`
 
-(The window size is quite small at the moment, but will be fixed once deepmind accepts my pull request).
+For a given model, we can print episodes to inspect what the model is doing. For instance, this is done by running
 
-## Documentation/Support
+```
+python3 src/main.py --env-config=twostagelevergame --config=policy_gradient \
+with seed=100 \
+evaluate=True \
+save_episodes=True \
+checkpoint_path=results/models/policy_gradient__2020-11-24_12-58-20 
+```
 
-Documentation is a little sparse at the moment (but will improve!). Please raise an issue in this repo, or email [Tabish](mailto:tabish.rashid@cs.ox.ac.uk)
+This adds a .txt file in the directory `results/episodes/policy_gradient__2020-11-24_12-58-20/` with printouts of episodes
 
-## License
+Next, we turn to calculating hash-values for all models. We calculate hash values simultaneously using 20 different seeds
+for the hash-function. That is done by running the command.
 
-Code licensed under the Apache License v2.0
+```
+python3 src/main.py --env-config=twostagelevergame --config=policy_gradient \
+with seed=100 \
+evaluate=True \
+cross_play=True \
+only_self_play=True \
+calculate_hash=True \
+test_nepisode=2048 \
+hash_type=nn \
+hash_function_seeds="[100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119]" \
+model_paths=results/model_lists/twostagelevergame.csv
+```
+
+Setting `test_nepisode=2048` means that the hash-function will be calculated for 2048 episodes and the
+tie-breaking function will be an average of those. `hash_function_seeds` specifies the list of seeds for the hash-function.
+`seed` specifies randomness of the environment and agent policies.
+
+The following programs are then based on the data generated from this run, using the sacred experiment ID of the run.
+For our experiments, the IDs how the hash-function run for both environments are `1672` and `1673`.
+
+After having calculated hash-values, other-play with tie-breaking can be run and evaluated. To that end, we run
+
+```
+python3 src/op_with_tie_breaking.py --hash_run="1672" --n_seeds_per_run="32" --seed="100" --test_nepisode="2048" 
+python3 src/op_with_tie_breaking.py --hash_run="1673" --n_seeds_per_run="32" --seed="100" --test_nepisode="2048" 
+```
+
+This indicates that we use the hash values and list of models used from the sacred ID `1672`, and split the runs into 10
+groups of 32 each for the evaluation. The specified `seed` and `test_nepisode` are relevant to the evaluation of the
+tie-breaking method, they specify the environment/policy stochasticity and number of test episodes per model for the
+evaluation run.
+
+Now assume we have run the above script for both environments, and the sacred IDs associated to the cross-play evaluations
+are `1674` respectively `1675`. We can now plot heatmaps and graphs to illustrate the results from these. For instance,
+for the first environment, we run
+
+```
+python3 src/plot_cross_play_heatmap.py --run='1674' >> results/op_with_tie_breaking/evalrun_1674_plot_cross_play_heatmap.log
+python3 src/plot_op_w_tie_breaking.py --run='1674' >> results/op_with_tie_breaking/evalrun_1674_plot_graph.log
+```
+
+This creates pdf files with plots in the directory `results/op_with_tie_breaking/`
+
+                   
+Finally we can analyze the policies in terms of their equivalence classes, such as how frequent each is, and plot a
+histogram of hash values in terms of the equivalence classes. To that end, we need to first perform cross-play across
+all the different policies (i.e., calculate 102400 cross-play values). To do so efficiently, we only test each
+combination with 256 episodes.
+
+```
+python3 src/main.py --env-config=twostagelevergame --config=policy_gradient \
+with seed=100 \
+evaluate=True \
+cross_play=True \
+test_nepisode=256 \
+model_paths=results/model_lists/twostagelevergame.csv
+```
+
+The data is saved under sacred IDs `??` and `??`. Using these, we implemented a method that can build up equivalence classes
+of policies, based on the cross-play data. These classes are then analyzed in terms of their size, and a histogram with
+hash values for each class is created
+
+```
+python3 src/analysis_of_equiv_classes.py --run='1640' --hash_run='1672' --index='0' >> results/analysis_of_equiv_classes/run1640_hashrun1672_analysis.log
+```
+
+This prints a lot of data on the equivalence classes and saves a histogram to the directory
+`results/analysis_of_equiv_classes/`. The `index` is the index of the seed for the hash function that is used for the
+histogram.

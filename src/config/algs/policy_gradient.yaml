@@ -1,0 +1,24 @@
+# --- policy_gradient specific parameters ---
+
+action_selector: "multinomial"
+epsilon_start: 0.
+epsilon_finish: 0.
+epsilon_anneal_time: 1
+mask_before_softmax: True #LOOK INTO THIS!!
+
+runner: "episode"
+
+#buffer_size: 8
+#batch_size_run: 8
+#batch_size: 8
+buffer_size: 256
+batch_size_run: 256
+batch_size: 256
+
+lr: 0.0005
+
+# use vanilla policy gradient
+agent_output_type: "pi_logits"
+learner: "policy_gradient_learner"
+
+name: "policy_gradient"

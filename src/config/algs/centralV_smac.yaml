@@ -6,11 +6,15 @@ epsilon_finish: .01
 epsilon_anneal_time: 100000
 mask_before_softmax: False #LOOK INTO THIS!!
 
-runner: "parallel"
+runner: "episode"
 
-buffer_size: 8
-batch_size_run: 8
-batch_size: 8
+#buffer_size: 8
+#batch_size_run: 8
+#batch_size: 8
+buffer_size: 256
+batch_size_run: 256
+batch_size: 256
+
 
 env_args:
   state_last_action: False # critic adds last action internally
@@ -29,9 +33,11 @@ critic_q_fn: "centralV"
 critic_baseline_fn: "centralV"
 critic_train_mode: "seq"
 critic_train_reps: 1
-q_nstep: 1  # 0 corresponds to default Q, 1 is r + gamma*Q, etc
+#I am changing this from 1 to 1000 since I just want monte carlo returns and no central V (since central V is feed forward NN and
+#cannot memorize past observations)
+q_nstep: 1000  # 0 corresponds to default Q, 1 is r + gamma*Q, etc
 critic_fact: # False by default
 no_last_actions: False
 no_state: False
 
-name: "centralV_smac"
+name: "centralV"
