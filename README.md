@@ -1,6 +1,6 @@
-# Code for "A new Formalism, Method and Open Issues for Zero-Shot Coordination"
+# Code for "A New Formalism, Method and Open Issues for Zero-Shot Coordination"
 
-This repository contains code for the Bachelor thesis on "A new Formalism, Method and Open Issues for Zero-Shot Coordination" by Johannes Treutlein.
+This repository contains code for the Bachelor thesis on "A New Formalism, Method and Open Issues for Zero-Shot Coordination" by Johannes Treutlein.
 
 It is based on a beta-release of the PyMARL framework. For more specific information on Pymarl, see the file `PYMARL.md` and https://github.com/oxwhirl/pymarl.
 
