@@ -7,6 +7,7 @@ import pandas as pd
 import json
 import seaborn as sns
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 import os
 
 from utils.uniquify import uniquify
@@ -86,13 +87,22 @@ def op_tie_breaking_evaluation(returns, hash_lists, args):
 
     hashs_per_class = sorted(hashs_per_class, key=lambda x: -len(x))
 
+    mpl.rcParams.update({
+        "font.size": 8,
+        "text.usetex": True
+    })
+
+    plt.figure(figsize=(2.89, 2.31))
+
     for i, hashs in enumerate(hashs_per_class):
         plt.hist(hashs, bins, alpha=0.5, label='Class {}'.format(i+1))
 
     plt.legend(loc='upper left')
     plt.title('{}'.format(args.title))
-    plt.xlabel('Hash value')
+    plt.xlabel('Tie-breaking value')
     plt.ylabel('Number of policies')
+
+    plt.tight_layout()
 
 
     if args.save:

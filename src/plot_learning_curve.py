@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import os
 from tensorboard.backend.event_processing.event_accumulator import EventAccumulator
 from collections import defaultdict
+import matplotlib as mpl
 
 from utils.uniquify import uniquify
 
@@ -25,17 +26,28 @@ def plot_learning_curve(returns, t, args):
 
     x_vals = t
 
-    fig1, ax1 = plt.subplots()
-    ax1.plot(x_vals, mean)
-    ax1.fill_between(x_vals, mean - dev, mean + dev, alpha=0.1)
+    mpl.rcParams.update({
+        "font.size": 8,
+        "text.usetex": True
+    })
+
+    plt.figure(figsize=(2.89, 2.31))
+
+    ax1 = plt.axes()
+    plt.plot(x_vals, mean)
+    plt.fill_between(x_vals, mean - dev, mean + dev, alpha=0.1)
 
     plt.xlabel('Environment steps')
     plt.ylabel('Average return')
+
+
+    plt.tight_layout()
 
     if args.save:
         filename = 'results/learning_curves/learning_curve_paths_{}.pdf'.format(os.path.basename(args.model_paths))
         filename = uniquify(filename)
         plt.savefig(filename)
+
 
     plt.show()
 

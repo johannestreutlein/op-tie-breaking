@@ -9,6 +9,7 @@ import json
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
+import matplotlib as mpl
 
 from utils.uniquify import uniquify
 
@@ -26,22 +27,33 @@ def hash_method_plot(cross_play_results, args):
 
     x_vals = 2**np.arange(args.n_different_seeds)
 
-    fig1, ax1 = plt.subplots()
-    ax1.plot(x_vals, mean)
-    ax1.fill_between(x_vals, mean - dev, mean + dev, alpha=0.1)
+    mpl.rcParams.update({
+        "font.size": 8,
+        "text.usetex": True
+    })
+
+    plt.figure(figsize=(2.89, 2.31))
+
+    ax1 = plt.axes()
+    plt.plot(x_vals, mean)
+    plt.fill_between(x_vals, mean - dev, mean + dev, alpha=0.1)
 
     ax1.set_xscale('log', basex=2)
     ax1.set_xticks(x_vals)
     ax1.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
 
     plt.title('{}'.format(args.title))
-    plt.xlabel('Number of seeds per run')
+    plt.xlabel('Number of seeds used for tie-breaking')
     plt.ylabel('Average off-diagonal cross-play value')
+
+
+    plt.tight_layout()
 
     if args.save:
         filename = 'results/op_with_tie_breaking/evalrun_{}_op_tie_breaking_plot_{}.pdf'.format(args.run, args.env)
         filename = uniquify(filename)
         plt.savefig(filename)
+
 
     plt.show()
 

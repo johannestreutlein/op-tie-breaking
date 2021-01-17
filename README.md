@@ -134,8 +134,7 @@ For our experiments, the IDs how the hash-function run for both environments are
 After having calculated hash-values, other-play with tie-breaking can be run and evaluated. To that end, we run
 
 ```
-python3 src/op_with_tie_breaking.py --hash_run="1672" --n_seeds_per_run="32" --seed="100" --test_nepisode="2048" 
-python3 src/op_with_tie_breaking.py --hash_run="1673" --n_seeds_per_run="32" --seed="100" --test_nepisode="2048" 
+python3 src/op_with_tie_breaking.py --hash_run="1672" --n_seeds_per_run="32" --seed="100" --test_nepisode="2048" >> results/op_with_tie_breaking/op_with_tie_breaking_hashrun_1672.log
 ```
 
 This indicates that we use the hash values and list of models used from the sacred ID `1672`, and split the runs into 10
@@ -143,8 +142,10 @@ groups of 32 each for the evaluation. The specified `seed` and `test_nepisode` a
 tie-breaking method, they specify the environment/policy stochasticity and number of test episodes per model for the
 evaluation run.
 
-Now assume we have run the above script for both environments, and the sacred IDs associated to the cross-play evaluations
-are `1674` respectively `1675`. We can now plot heatmaps and graphs to illustrate the results from these. For instance,
+Now assume we have run the above script for both environments. In our case, the sacred-IDs
+associated to the cross-play evaluations
+are `1674` respectively `1676` for the two environment. We can now plot heatmaps and graphs to
+illustrate the results from these. For instance,
 for the first environment, we run
 
 ```
@@ -152,12 +153,13 @@ python3 src/plot_cross_play_heatmap.py --run='1674' >> results/op_with_tie_break
 python3 src/plot_op_w_tie_breaking.py --run='1674' >> results/op_with_tie_breaking/evalrun_1674_plot_graph.log
 ```
 
-This creates pdf files with plots in the directory `results/op_with_tie_breaking/`
+This creates pdf files with plots in the directory `results/op_with_tie_breaking/`. For these plots, one seed for the 
+hash-function is used, and we compare the case where no ties are broken with the case where ties are broken between all 32 seeds
+per each of the 10 different groups.
 
-                   
-Finally we can analyze the policies in terms of their equivalence classes, such as how frequent each is, and plot a
+Finally, we can analyze the policies in terms of their equivalence classes, such as their relative frequencies, and plot a
 histogram of hash values in terms of the equivalence classes. To that end, we need to first perform cross-play across
-all the different policies (i.e., calculate 102400 cross-play values). To do so efficiently, we only test each
+all the different policies (i.e., calculate 320^2=102400 cross-play values). To do so efficiently, we only test each
 combination with 256 episodes.
 
 ```
@@ -169,14 +171,14 @@ test_nepisode=256 \
 model_paths=results/model_lists/twostagelevergame.csv
 ```
 
-The data is saved under sacred IDs `??` and `??`. Using these, we implemented a method that can build up equivalence classes
+The data is saved under sacred IDs `1677` and `1678`. Using these, we implemented a method that can build up equivalence classes
 of policies, based on the cross-play data. These classes are then analyzed in terms of their size, and a histogram with
 hash values for each class is created
 
 ```
-python3 src/analysis_of_equiv_classes.py --run='1640' --hash_run='1672' --index='0' >> results/analysis_of_equiv_classes/run1640_hashrun1672_analysis.log
+python3 src/analysis_of_equiv_classes.py --run='1677' --hash_run='1672' --index='0' >> results/analysis_of_equiv_classes/run1677_hashrun1672_analysis.log
 ```
 
-This prints a lot of data on the equivalence classes and saves a histogram to the directory
-`results/analysis_of_equiv_classes/`. The `index` is the index of the seed for the hash function that is used for the
+This prints a lot of data on the equivalence classes to the log file and saves a histogram to the directory
+`results/analysis_of_equiv_classes/`. here, `--index=0` specifies the index of the seed for the hash function that is used for the
 histogram.

@@ -8,11 +8,17 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import os
 from utils.uniquify import uniquify
+import matplotlib as mpl
 
 def plot_cross_play_heatmap(matrices, args):
 
-    grid_kws = {"width_ratios": (.45, .45, .04), "wspace": .3, "hspace": .2}
-    f, (ax1, ax2, cbar_ax) = plt.subplots(1, 3, gridspec_kw=grid_kws, figsize=(10, 4))
+    mpl.rcParams.update({
+        "font.size": 8,
+        "text.usetex": True
+    })
+
+    grid_kws = {"width_ratios": (.48, .48, .04), "wspace": .3, "hspace": .3}
+    f, (ax1, ax2, cbar_ax) = plt.subplots(1, 3, gridspec_kw=grid_kws, figsize=(5.78, 2.54))
 
     ax1.title.set_text('Other-play')
     ax2.title.set_text('Other-play with tie-breaking')
@@ -42,8 +48,11 @@ def plot_cross_play_heatmap(matrices, args):
         heatmap.set_ylabel('Player 1 seed')
         heatmap.tick_params(length=0, labeltop=True, labelbottom=False)
 
+
+    plt.gcf().subplots_adjust(top=0.8)
+
     if args.save:
-        filename = 'results/opt_with_tie_breaking/evalrun_{}_index_{}_cross_play_heatmap_{}.pdf'.format(args.run, args.index, args.env)
+        filename = 'results/op_with_tie_breaking/evalrun_{}_index_{}_cross_play_heatmap_{}.pdf'.format(args.run, args.index, args.env)
         filename = uniquify(filename)
         plt.savefig(filename)
 
