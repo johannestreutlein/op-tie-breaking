@@ -1,4 +1,4 @@
-# A new Formalism, Method and Open Issues for Zero-Shot Coordination code
+# Code for "A new Formalism, Method and Open Issues for Zero-Shot Coordination"
 
 This repository contains code for the Bachelor thesis on "A new Formalism, Method and Open Issues for Zero-Shot Coordination" by Johannes Treutlein.
 
