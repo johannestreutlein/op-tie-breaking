@@ -175,3 +175,8 @@ python3 src/analysis_of_equiv_classes.py --run='1677' --hash_run='1672' --index=
 This prints a lot of data on the equivalence classes and saves a histogram to the directory
 `results/analysis_of_equiv_classes/`. Here, `--index=0` specifies the index of the seed for the hash function that is used for the
 histogram.
+
+
+## License
+
+Code licensed under the Apache License v2.0
