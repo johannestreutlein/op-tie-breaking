@@ -1,0 +1,1099 @@
+
+
+===================================
+2021-01-10 23:56:05.716191
+
+
+loading config from results/sacred/1676/config.json
+
+
+loading returns from results/sacred/1676/info.json
+Number of returns: 12000
+Number of independent runs that have been considered: 10
+Number of different amounts of seeds: 6
+Number of hash function seeds: 20
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 0
+off_diagonal_mean:
+0.9072536892361112
+off_diagonal_std:
+0.7234393241722414
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 1
+off_diagonal_mean:
+0.9060980902777778
+off_diagonal_std:
+0.7256789315009058
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 2
+off_diagonal_mean:
+0.9016384548611112
+off_diagonal_std:
+0.7254951105940787
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 3
+off_diagonal_mean:
+0.9054416232638889
+off_diagonal_std:
+0.7242314147431171
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 4
+off_diagonal_mean:
+0.8983018663194444
+off_diagonal_std:
+0.7257123087094169
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 5
+off_diagonal_mean:
+0.9073133680555555
+off_diagonal_std:
+0.7260202572621063
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 6
+off_diagonal_mean:
+0.9067925347222222
+off_diagonal_std:
+0.7227433012144019
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 7
+off_diagonal_mean:
+0.9123752170138889
+off_diagonal_std:
+0.7264563303067758
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 8
+off_diagonal_mean:
+0.9053005642361112
+off_diagonal_std:
+0.7247053737468133
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 9
+off_diagonal_mean:
+0.8989908854166667
+off_diagonal_std:
+0.7244209739702988
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 10
+off_diagonal_mean:
+0.9021647135416667
+off_diagonal_std:
+0.7237085600376076
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 11
+off_diagonal_mean:
+0.9066189236111111
+off_diagonal_std:
+0.7230750032775469
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 12
+off_diagonal_mean:
+0.9048828125
+off_diagonal_std:
+0.7247517368962105
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 13
+off_diagonal_mean:
+0.90341796875
+off_diagonal_std:
+0.7239246358736181
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 14
+off_diagonal_mean:
+0.906982421875
+off_diagonal_std:
+0.7239554691029338
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 15
+off_diagonal_mean:
+0.9069769965277777
+off_diagonal_std:
+0.7254268918400241
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 16
+off_diagonal_mean:
+0.9031901041666667
+off_diagonal_std:
+0.7266995419931275
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 17
+off_diagonal_mean:
+0.9022515190972222
+off_diagonal_std:
+0.7210506196039602
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 18
+off_diagonal_mean:
+0.9016276041666667
+off_diagonal_std:
+0.7227047949629468
+
+
+-----------
+Number of seeds: 1
+Hash seed index: 19
+off_diagonal_mean:
+0.9056043836805555
+off_diagonal_std:
+0.727336650058546
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 0
+off_diagonal_mean:
+1.2273980034722223
+off_diagonal_std:
+0.6407195613074512
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 1
+off_diagonal_mean:
+1.169802517361111
+off_diagonal_std:
+0.7112147322796051
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 2
+off_diagonal_mean:
+1.17314453125
+off_diagonal_std:
+0.707418399893299
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 3
+off_diagonal_mean:
+1.2605251736111112
+off_diagonal_std:
+0.6807590816070849
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 4
+off_diagonal_mean:
+1.2424587673611112
+off_diagonal_std:
+0.6385414588646237
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 5
+off_diagonal_mean:
+1.3327039930555555
+off_diagonal_std:
+0.5967979438124107
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 6
+off_diagonal_mean:
+1.2401204427083334
+off_diagonal_std:
+0.6373180273048972
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 7
+off_diagonal_mean:
+0.9936957465277778
+off_diagonal_std:
+0.7328917750603835
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 8
+off_diagonal_mean:
+1.1798502604166667
+off_diagonal_std:
+0.7078220017791648
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 9
+off_diagonal_mean:
+1.323095703125
+off_diagonal_std:
+0.5976975789459399
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 10
+off_diagonal_mean:
+1.3257921006944444
+off_diagonal_std:
+0.5963928155839369
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 11
+off_diagonal_mean:
+1.1725694444444446
+off_diagonal_std:
+0.712347288582073
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 12
+off_diagonal_mean:
+1.1752549913194446
+off_diagonal_std:
+0.7049312504665454
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 13
+off_diagonal_mean:
+1.1676974826388888
+off_diagonal_std:
+0.7105694317053078
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 14
+off_diagonal_mean:
+1.2609266493055555
+off_diagonal_std:
+0.6810653209799887
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 15
+off_diagonal_mean:
+1.2360188802083334
+off_diagonal_std:
+0.638008013538098
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 16
+off_diagonal_mean:
+1.1671061197916666
+off_diagonal_std:
+0.7034363085270029
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 17
+off_diagonal_mean:
+1.3308051215277779
+off_diagonal_std:
+0.5954188545585695
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 18
+off_diagonal_mean:
+1.3231770833333334
+off_diagonal_std:
+0.5965996302875028
+
+
+-----------
+Number of seeds: 2
+Hash seed index: 19
+off_diagonal_mean:
+1.3214409722222222
+off_diagonal_std:
+0.5981151435012663
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 0
+off_diagonal_mean:
+1.6411946614583333
+off_diagonal_std:
+0.47690237047567907
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 1
+off_diagonal_mean:
+1.9933865017361112
+off_diagonal_std:
+0.02095165490476903
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 2
+off_diagonal_mean:
+1.992258029513889
+off_diagonal_std:
+0.02456696489213383
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 3
+off_diagonal_mean:
+1.4371636284722222
+off_diagonal_std:
+0.4967400861215134
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 4
+off_diagonal_mean:
+1.6410915798611112
+off_diagonal_std:
+0.47882093540445464
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 5
+off_diagonal_mean:
+1.6354709201388888
+off_diagonal_std:
+0.48296293728244805
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 6
+off_diagonal_mean:
+1.63896484375
+off_diagonal_std:
+0.477562298841062
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 7
+off_diagonal_mean:
+1.2520345052083333
+off_diagonal_std:
+0.617601671493173
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 8
+off_diagonal_mean:
+1.9924641927083333
+off_diagonal_std:
+0.019455562168228902
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 9
+off_diagonal_mean:
+1.6373372395833334
+off_diagonal_std:
+0.4781762698851173
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 10
+off_diagonal_mean:
+1.6394259982638888
+off_diagonal_std:
+0.47776394600400596
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 11
+off_diagonal_mean:
+1.996435546875
+off_diagonal_std:
+0.023942544129567655
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 12
+off_diagonal_mean:
+1.9947374131944444
+off_diagonal_std:
+0.02612664944024334
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 13
+off_diagonal_mean:
+1.9945421006944444
+off_diagonal_std:
+0.023332666861890707
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 14
+off_diagonal_mean:
+1.9939127604166667
+off_diagonal_std:
+0.021269890943992033
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 15
+off_diagonal_mean:
+1.6358506944444444
+off_diagonal_std:
+0.4814571302456285
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 16
+off_diagonal_mean:
+1.9951117621527779
+off_diagonal_std:
+0.0186765708596938
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 17
+off_diagonal_mean:
+1.6361924913194446
+off_diagonal_std:
+0.4779182659089031
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 18
+off_diagonal_mean:
+1.6370171440972223
+off_diagonal_std:
+0.47418057715982015
+
+
+-----------
+Number of seeds: 4
+Hash seed index: 19
+off_diagonal_mean:
+1.6378038194444444
+off_diagonal_std:
+0.4807994212736072
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 0
+off_diagonal_mean:
+1.78935546875
+off_diagonal_std:
+0.40061225393421446
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 1
+off_diagonal_mean:
+1.9910590277777778
+off_diagonal_std:
+0.025260463276135885
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 2
+off_diagonal_mean:
+1.9957899305555555
+off_diagonal_std:
+0.02163606705423776
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 3
+off_diagonal_mean:
+1.4349609375
+off_diagonal_std:
+0.4947242300021505
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 4
+off_diagonal_mean:
+1.7960123697916666
+off_diagonal_std:
+0.4020297411713116
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 5
+off_diagonal_mean:
+1.9926323784722222
+off_diagonal_std:
+0.024066057527848017
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 6
+off_diagonal_mean:
+1.7959147135416667
+off_diagonal_std:
+0.40182156681040904
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 7
+off_diagonal_mean:
+1.5242296006944445
+off_diagonal_std:
+0.5037200114523277
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 8
+off_diagonal_mean:
+1.9947048611111111
+off_diagonal_std:
+0.021433255638437454
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 9
+off_diagonal_mean:
+1.9897243923611112
+off_diagonal_std:
+0.022826057378289875
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 10
+off_diagonal_mean:
+1.9901041666666666
+off_diagonal_std:
+0.020876369530377647
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 11
+off_diagonal_mean:
+1.9941189236111112
+off_diagonal_std:
+0.02533233065786656
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 12
+off_diagonal_mean:
+1.9949110243055554
+off_diagonal_std:
+0.021003785959932745
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 13
+off_diagonal_mean:
+1.9953070746527777
+off_diagonal_std:
+0.02254236993784897
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 14
+off_diagonal_mean:
+1.996945529513889
+off_diagonal_std:
+0.023408044586527333
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 15
+off_diagonal_mean:
+1.7926215277777777
+off_diagonal_std:
+0.39728176230917117
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 16
+off_diagonal_mean:
+1.9934190538194445
+off_diagonal_std:
+0.022733875780748845
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 17
+off_diagonal_mean:
+1.9948079427083334
+off_diagonal_std:
+0.01960171344256863
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 18
+off_diagonal_mean:
+1.9930718315972222
+off_diagonal_std:
+0.022859802724695465
+
+
+-----------
+Number of seeds: 8
+Hash seed index: 19
+off_diagonal_mean:
+1.9917046440972221
+off_diagonal_std:
+0.020137810952288282
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 0
+off_diagonal_mean:
+1.991162109375
+off_diagonal_std:
+0.021292527720738485
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 1
+off_diagonal_mean:
+1.9962348090277777
+off_diagonal_std:
+0.02200099980900659
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 2
+off_diagonal_mean:
+1.9968424479166667
+off_diagonal_std:
+0.02169495618636954
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 3
+off_diagonal_mean:
+1.5265299479166667
+off_diagonal_std:
+0.5003661881057747
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 4
+off_diagonal_mean:
+1.9967176649305556
+off_diagonal_std:
+0.022888770930285643
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 5
+off_diagonal_mean:
+1.996533203125
+off_diagonal_std:
+0.022904624086748447
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 6
+off_diagonal_mean:
+1.9896918402777777
+off_diagonal_std:
+0.020849278317486532
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 7
+off_diagonal_mean:
+1.795263671875
+off_diagonal_std:
+0.4017952544208319
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 8
+off_diagonal_mean:
+1.9963053385416667
+off_diagonal_std:
+0.021115873061845702
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 9
+off_diagonal_mean:
+1.991162109375
+off_diagonal_std:
+0.023131920177159794
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 10
+off_diagonal_mean:
+1.99248046875
+off_diagonal_std:
+0.021370114209918103
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 11
+off_diagonal_mean:
+1.9958441840277779
+off_diagonal_std:
+0.024736611111510525
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 12
+off_diagonal_mean:
+1.9905924479166666
+off_diagonal_std:
+0.021476827509505376
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 13
+off_diagonal_mean:
+1.9908311631944444
+off_diagonal_std:
+0.024193532828008603
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 14
+off_diagonal_mean:
+1.9940321180555556
+off_diagonal_std:
+0.02134592505447508
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 15
+off_diagonal_mean:
+1.993039279513889
+off_diagonal_std:
+0.02053292953755642
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 16
+off_diagonal_mean:
+1.9973415798611112
+off_diagonal_std:
+0.023058517143279635
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 17
+off_diagonal_mean:
+1.9874077690972223
+off_diagonal_std:
+0.02152570283796097
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 18
+off_diagonal_mean:
+1.9975314670138888
+off_diagonal_std:
+0.023585591830506965
+
+
+-----------
+Number of seeds: 16
+Hash seed index: 19
+off_diagonal_mean:
+1.9911512586805555
+off_diagonal_std:
+0.02147806436696464
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 0
+off_diagonal_mean:
+1.9898763020833334
+off_diagonal_std:
+0.0209369372138812
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 1
+off_diagonal_mean:
+1.9966959635416666
+off_diagonal_std:
+0.023806241240605087
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 2
+off_diagonal_mean:
+1.9981391059027778
+off_diagonal_std:
+0.022136481099517772
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 3
+off_diagonal_mean:
+1.5281032986111112
+off_diagonal_std:
+0.5022562307613581
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 4
+off_diagonal_mean:
+1.9963433159722221
+off_diagonal_std:
+0.02407272720916515
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 5
+off_diagonal_mean:
+1.9906846788194446
+off_diagonal_std:
+0.02356254032330308
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 6
+off_diagonal_mean:
+1.9896918402777777
+off_diagonal_std:
+0.02415349715983868
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 7
+off_diagonal_mean:
+1.9934678819444445
+off_diagonal_std:
+0.023802071065951332
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 8
+off_diagonal_mean:
+1.9942220052083333
+off_diagonal_std:
+0.024176278011743497
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 9
+off_diagonal_mean:
+1.9901421440972222
+off_diagonal_std:
+0.02252511194262753
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 10
+off_diagonal_mean:
+1.9935926649305555
+off_diagonal_std:
+0.02188505247870424
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 11
+off_diagonal_mean:
+1.9938096788194444
+off_diagonal_std:
+0.02425095556259548
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 12
+off_diagonal_mean:
+1.9929416232638888
+off_diagonal_std:
+0.021783420399405867
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 13
+off_diagonal_mean:
+1.9905815972222223
+off_diagonal_std:
+0.021939143574764952
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 14
+off_diagonal_mean:
+1.9914767795138888
+off_diagonal_std:
+0.02035756921081226
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 15
+off_diagonal_mean:
+1.9932942708333334
+off_diagonal_std:
+0.024715886060100983
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 16
+off_diagonal_mean:
+1.9909993489583333
+off_diagonal_std:
+0.01955484279263217
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 17
+off_diagonal_mean:
+1.9918402777777777
+off_diagonal_std:
+0.02231696911489416
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 18
+off_diagonal_mean:
+1.9919542100694445
+off_diagonal_std:
+0.024758767466148142
+
+
+-----------
+Number of seeds: 32
+Hash seed index: 19
+off_diagonal_mean:
+1.9983344184027778
+off_diagonal_std:
+0.024000721289741647
+Latex code for table of results:
+& 0.90 (\textpm 0.00) & 1.23 (\textpm 0.08) & 1.75 (\textpm 0.22) & 1.90 (\textpm 0.16) & 1.96 (\textpm 0.11) & 1.97 (\textpm 0.10) 
+
+
+
