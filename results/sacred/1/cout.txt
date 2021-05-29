@@ -1,0 +1,83 @@
+[INFO 15:25:59] pymarl Running command 'my_main'
+[INFO 15:25:59] pymarl Started run with ID "1"
+[DEBUG 15:25:59] pymarl Starting Heartbeat
+[DEBUG 15:25:59] my_main Started
+[WARNING 15:25:59] my_main CUDA flag use_cuda was switched OFF automatically because no CUDA devices are available!
+[INFO 15:25:59] my_main Experiment Parameters:
+[INFO 15:25:59] my_main 
+
+{   'action_selector': 'multinomial',
+    'agent': 'rnn',
+    'agent_output_type': 'pi_logits',
+    'batch_size': 256,
+    'batch_size_run': 256,
+    'buffer_cpu_only': True,
+    'buffer_size': 256,
+    'calculate_hash': False,
+    'checkpoint_path': 'results/models/policy_gradient__2020-11-24_12-58-20',
+    'critic_lr': 0.0005,
+    'cross_play': False,
+    'entropy_alpha': 0.5,
+    'env': 'twostagelevergame',
+    'env_args': {   'episode_limit': 3,
+                    'extra_action': 0,
+                    'n_comm_steps': 0,
+                    'r_failure': -1,
+                    'r_success': 1,
+                    'seed': 100,
+                    'title': 'twostagelevergame'},
+    'epsilon_anneal_time': 1,
+    'epsilon_finish': 0.0,
+    'epsilon_start': 0.0,
+    'evaluate': True,
+    'gamma': 1,
+    'grad_norm_clip': 10,
+    'hash_function_seeds': [   ],
+    'hash_hidden_dim': 32,
+    'hash_type': 'nn',
+    'label': 'default_label',
+    'learner': 'policy_gradient_learner',
+    'learner_log_interval': 200000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 200000,
+    'lr': 0.0005,
+    'mac': 'basic_mac',
+    'mask_before_softmax': True,
+    'model_paths': '',
+    'n_seeds_per_run': 0,
+    'name': 'policy_gradient',
+    'obs_agent_id': False,
+    'obs_last_action': False,
+    'only_self_play': False,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'repeat_id': 1,
+    'rnn_hidden_dim': 64,
+    'runner': 'episode',
+    'runner_log_interval': 200000,
+    'save_episodes': True,
+    'save_model': True,
+    'save_model_interval': 1000000,
+    'save_replay': False,
+    'seed': 100,
+    't_max': 3100000,
+    'test_greedy': False,
+    'test_interval': 200000,
+    'test_nepisode': 256,
+    'use_cuda': False,
+    'use_tensorboard': True}
+
+[INFO 15:26:05] my_main Loading model from results/models/policy_gradient__2020-11-24_12-58-20/3002880
+/Users/___/PycharmProjects/code_op_tie_breaking_ICML_2021/src/components/episode_buffer.py:105: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  v = th.tensor(v, dtype=dtype, device=self.device)
+creating new directory results/episodes/policy_gradient__2020-11-24_12-58-20
+/Users/___/PycharmProjects/code_op_tie_breaking_ICML_2021/src/envs/levergame.py:230: FutureWarning: Passing a negative integer is deprecated in version 1.0 and will not be supported in future version. Instead, use None to not limit the column width.
+  pd.set_option('display.max_colwidth', -1)
+Test episodes saved at: /Users/___/PycharmProjects/code_op_tie_breaking_ICML_2021/results/episodes/policy_gradient__2020-11-24_12-58-20/policy_gradient_twostagelevergame_seed_100_.txt
+[INFO 15:26:06] my_main Test Stats | t_env:    3002880 | Episode:      256
+test_ep_length_mean:       3.0000	test_return_mean:          0.4688	test_return_std:           1.6768	
+Exiting Main
+Mongodb client closed
+[DEBUG 15:26:06] my_main Finished after 0:00:06.
+[INFO 15:26:06] pymarl Completed after 0:00:06

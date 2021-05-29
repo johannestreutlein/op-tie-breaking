@@ -1,0 +1,86 @@
+{
+  "artifacts": [],
+  "command": "my_main",
+  "experiment": {
+    "base_dir": "/Users/___/PycharmProjects/code_op_tie_breaking_ICML_2021/src",
+    "dependencies": [
+      "munch==2.5.0",
+      "numpy==1.19.1",
+      "pandas==1.1.3",
+      "pymongo==3.11.0",
+      "sacred==0.8.1",
+      "torch==1.6.0"
+    ],
+    "mainfile": "main.py",
+    "name": "pymarl",
+    "repositories": [],
+    "sources": [
+      [
+        "main.py",
+        "_sources/main_47bb4a3b7cf41887c1f8e7a35c98e388.py"
+      ],
+      [
+        "run.py",
+        "_sources/run_4c4d6045034fbd61a07c51a1b9ebae1a.py"
+      ],
+      [
+        "utils/logging.py",
+        "_sources/logging_aa14e56e60b01dd7a9ddb8e6cdf36b85.py"
+      ]
+    ]
+  },
+  "heartbeat": "2021-02-10T14:36:10.034141",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Core(TM) i7-7660U CPU @ 2.50GHz",
+    "hostname": "MacBook-Pro-8.local",
+    "os": [
+      "Darwin",
+      "Darwin-19.6.0-x86_64-i386-64bit"
+    ],
+    "python_version": "3.7.9"
+  },
+  "meta": {
+    "command": "my_main",
+    "options": {
+      "--beat-interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print-config": false,
+      "--priority": null,
+      "--queue": false,
+      "--s3": null,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "seed=100",
+        "evaluate=True",
+        "cross_play=True",
+        "only_self_play=True",
+        "calculate_hash=True",
+        "test_nepisode=2048",
+        "hash_type=nn",
+        "hash_function_seeds=[100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119]",
+        "model_paths=results/model_lists/asymmetriclevergame.csv"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2021-02-10T14:31:11.174047",
+  "status": "COMPLETED",
+  "stop_time": "2021-02-10T14:36:09.491803"
+}

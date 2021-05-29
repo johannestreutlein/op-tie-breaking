@@ -1,0 +1,34 @@
+{
+  "episode": [
+    256
+  ],
+  "episode_T": [
+    3002880
+  ],
+  "test_ep_length_mean": [
+    3.0
+  ],
+  "test_ep_length_mean_T": [
+    3002880
+  ],
+  "test_return_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 0.46875
+    }
+  ],
+  "test_return_mean_T": [
+    3002880
+  ],
+  "test_return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 1.676759803162039
+    }
+  ],
+  "test_return_std_T": [
+    3002880
+  ]
+}
