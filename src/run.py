@@ -62,7 +62,7 @@ def run(_run, _config, _log, pymongo_client):
     print("Mongodb client closed")
 
 
-    #JT: had to comment out the following, otherwise this terminates my filestorage observer before it
+    #had to comment out the following, otherwise this terminates my filestorage observer before it
     #saves the results.
 
     #print("Stopping all threads")

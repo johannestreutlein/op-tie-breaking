@@ -28,11 +28,10 @@ def hash_method_plot(cross_play_results, args):
     x_vals = 2**np.arange(args.n_different_seeds)
 
     mpl.rcParams.update({
-        "font.size": 8,
-        "text.usetex": True
+        "font.size": 9
     })
 
-    plt.figure(figsize=(2.89, 2.31))
+    plt.figure(figsize=(2.9, 2.6))
 
     ax1 = plt.axes()
     plt.plot(x_vals, mean)
@@ -44,7 +43,7 @@ def hash_method_plot(cross_play_results, args):
 
     plt.title('{}'.format(args.title))
     plt.xlabel('Number of seeds used for tie-breaking')
-    plt.ylabel('Average off-diagonal cross-play value')
+    plt.ylabel('Avg off-diagonal cross-play value')
 
 
     plt.tight_layout()

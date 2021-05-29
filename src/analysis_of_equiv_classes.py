@@ -88,11 +88,10 @@ def op_tie_breaking_evaluation(returns, hash_lists, args):
     hashs_per_class = sorted(hashs_per_class, key=lambda x: -len(x))
 
     mpl.rcParams.update({
-        "font.size": 8,
-        "text.usetex": True
+        "font.size": 9
     })
 
-    plt.figure(figsize=(2.89, 2.31))
+    plt.figure(figsize=(2.9, 2.6))
 
     for i, hashs in enumerate(hashs_per_class):
         plt.hist(hashs, bins, alpha=0.5, label='Class {}'.format(i+1))

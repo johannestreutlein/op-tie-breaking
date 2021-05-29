@@ -65,7 +65,7 @@ class LeverGame(MultiAgentEnv):
         else:
             permutations_A = np.array([[0, 1], [1, 0]])
 
-        #Z stand for messages, which are not relevant in matchingpennies/matchingpennies2, but still implemented
+        #Z stand for messages, which are not relevant here, but still implemented
         permutations_Z = np.array([[0, 1], [1, 0]])
 
         perm_choice_A = self.rng.choice(2, size=(self.bs, self.n_players))

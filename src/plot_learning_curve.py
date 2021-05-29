@@ -27,11 +27,10 @@ def plot_learning_curve(returns, t, args):
     x_vals = t
 
     mpl.rcParams.update({
-        "font.size": 8,
-        "text.usetex": True
+        "font.size": 9
     })
 
-    plt.figure(figsize=(2.89, 2.31))
+    plt.figure(figsize=(2.9, 2.6))
 
     ax1 = plt.axes()
     plt.plot(x_vals, mean)

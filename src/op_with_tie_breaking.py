@@ -11,14 +11,14 @@ import os
 from utils.uniquify import uniquify
 
 def op_tie_breaking_evaluation(hash_lists, args):
-    '''This function evaluates our method, other-play with tie-breaking. It applies the hash method to independent training runs to
-    get a policy from each run and
-    then starts an experiment that calculates cross-play values.
+    '''This function evaluates our method, other-play with tie-breaking. It applies the tie-breaking function to different training runs to
+    choose policies and
+    then starts an experiment that calculates cross-play values for the chosen policies.
 
     It would probably be better to run this with sacred, as part of an experiment, instead
     of an extra python file, etc., but this suffices for now.
-
     '''
+
     chosen_indices_dict = {}
     n_seeds_total = args.n_seeds_per_run
     number_of_runs = len(hash_lists[args.hash_function_seeds[0]]) // args.n_seeds_per_run
@@ -89,7 +89,8 @@ def op_tie_breaking_evaluation(hash_lists, args):
 
 def op_with_tie_breaking(hashes):
     '''this implements other-play with tie-breaking.
-    input is a list of hash values. output is the index for the highest hash-value
+    input is a list of tie-breaking values, output is index of policy with highest value.
+    The actual values are calculated in the hash-run, by a method of the environment
     '''
 
     best_policy = hashes.argmax()

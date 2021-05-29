@@ -14,11 +14,10 @@ def plot_cross_play_heatmap(matrices, args):
 
     mpl.rcParams.update({
         "font.size": 8,
-        "text.usetex": True
     })
 
     grid_kws = {"width_ratios": (.48, .48, .04), "wspace": .3, "hspace": .3}
-    f, (ax1, ax2, cbar_ax) = plt.subplots(1, 3, gridspec_kw=grid_kws, figsize=(5.78, 2.54))
+    f, (ax1, ax2, cbar_ax) = plt.subplots(1, 3, gridspec_kw=grid_kws, figsize=(5.8, 2.6))
 
     ax1.title.set_text('Other-play')
     ax2.title.set_text('Other-play with tie-breaking')
