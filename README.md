@@ -149,10 +149,10 @@ illustrate the results from these. We run
 
 ```
 python3 src/plot_cross_play_heatmap.py --run='4' >> results/op_with_tie_breaking/heatmap_run_4.log
-python3 src/plot_op_w_tie_breaking.py --run='4' >> results/op_with_tie_breaking/plot_run_4.log
+python3 src/plot_op_w_tie_breaking.py --run='4' --optimum='0.5' >> results/op_with_tie_breaking/plot_run_4.log
 
-python3 src/plot_cross_play_heatmap.py --run='5' >> results/op_with_tie_breaking/heatmap_run_5.log
-python3 src/plot_op_w_tie_breaking.py --run='5' >> results/op_with_tie_breaking/plot_run_5.log
+python3 src/plot_cross_play_heatmap.py --run='5'  >> results/op_with_tie_breaking/heatmap_run_5.log
+python3 src/plot_op_w_tie_breaking.py --run='5' --optimum='2.' >> results/op_with_tie_breaking/plot_run_5.log
 ```
 
 This creates pdf files with plots in the directory `results/op_with_tie_breaking`. For the heatmaps, one seed for the 

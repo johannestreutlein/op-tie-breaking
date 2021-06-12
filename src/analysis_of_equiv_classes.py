@@ -90,6 +90,8 @@ def op_tie_breaking_evaluation(returns, hash_lists, args):
     mpl.rcParams.update({
         "font.size": 9
     })
+    mpl.rcParams['pdf.fonttype'] = 42
+    mpl.rcParams['ps.fonttype'] = 42
 
     plt.figure(figsize=(2.9, 2.6))
 

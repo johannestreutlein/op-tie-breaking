@@ -15,6 +15,8 @@ def plot_cross_play_heatmap(matrices, args):
     mpl.rcParams.update({
         "font.size": 8,
     })
+    mpl.rcParams['pdf.fonttype'] = 42
+    mpl.rcParams['ps.fonttype'] = 42
 
     grid_kws = {"width_ratios": (.48, .48, .04), "wspace": .3, "hspace": .3}
     f, (ax1, ax2, cbar_ax) = plt.subplots(1, 3, gridspec_kw=grid_kws, figsize=(5.8, 2.6))
