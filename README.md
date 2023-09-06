@@ -1,6 +1,6 @@
 # Code for "A New Formalism, Method and Open Issues for Zero-Shot Coordination"
 
-This github repository contains the code for the ICML 2021 paper "A New Formalism, Method and Open Issues for Zero-Shot Coordination".
+This github repository contains the code for the ICML 2021 paper "A New Formalism, Method and Open Issues for Zero-Shot Coordination" (https://arxiv.org/abs/2106.06613).
 
 It is based on a beta-release of the PyMARL framework. For more specific information on Pymarl, see https://github.com/oxwhirl/pymarl.
 
